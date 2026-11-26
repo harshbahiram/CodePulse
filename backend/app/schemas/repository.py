@@ -1,9 +1,11 @@
 from datetime import datetime
 
-from pydantic import BaseModel, Field, HttpUrl
+from pydantic import BaseModel, Field, HttpUrl, field_validator
+from app.utils.github_url import parse_github_url
 
 
 class RepositoryRequest(BaseModel):
+
     repository_url: HttpUrl = Field(
         ...,
         description="Public GitHub repository URL",
@@ -16,6 +18,19 @@ class RepositoryRequest(BaseModel):
         max_length=255,
         description="Repository branch to analyze"
     )
+
+    @field_validator("repository_url", mode="before")
+    @classmethod
+    def validate_repository_url(cls, value):
+
+        if not isinstance(value, str):
+            raise ValueError(
+                "Repository URL must be a string"
+            )
+
+        repository = parse_github_url(value)
+
+        return repository.normalized_url
 
 
 class RepositoryOwner(BaseModel):
