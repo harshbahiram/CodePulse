@@ -1,5 +1,5 @@
 # CodePulse
-
+    
 **AI-Powered GitHub Repository Auditor**
 
 CodePulse is an intelligent software auditing platform designed to analyze GitHub repositories, identify code quality issues, detect potential security vulnerabilities, evaluate software architecture, and generate AI-powered improvement recommendations.

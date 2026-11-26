@@ -25,6 +25,12 @@ class Settings(BaseSettings):
     DB_USER: str
     DB_PASSWORD: SecretStr
 
+    # GitHub configuration
+    GITHUB_TOKEN: SecretStr
+    GITHUB_API_BASE_URL: str = "https://api.github.com"
+    GITHUB_API_TIMEOUT: int = 30
+    GITHUB_API_VERSION: str = "2022-11-28"
+
     @property
     def DATABASE_URL(self) -> URL:
         return URL.create(
