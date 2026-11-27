@@ -31,4 +31,4 @@ class GitHubPermissionError(GitHubAPIError):
 class GitHubConnectionError(GitHubAPIError):
     """Raised when GitHub cannot be reached."""
 
-    pass
+    pass        
