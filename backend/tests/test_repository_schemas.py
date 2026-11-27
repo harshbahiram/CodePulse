@@ -76,3 +76,43 @@ def test_negative_total_bytes():
             languages={},
             total_bytes=-100
         )
+
+
+def test_inconsistent_language_total():
+
+    with pytest.raises(ValidationError):
+
+        RepositoryLanguages(
+            languages={"Python": 500},
+            total_bytes=1000
+        )
+
+
+def test_negative_language_bytes():
+
+    with pytest.raises(ValidationError):
+
+        RepositoryLanguages(
+            languages={"Python": -100},
+            total_bytes=0
+        )
+
+
+def test_empty_language_distribution():
+
+    result = RepositoryLanguages(
+        languages={},
+        total_bytes=0
+    )
+
+    assert result.total_bytes == 0
+
+
+def test_invalid_language_byte_type():
+
+    with pytest.raises(ValidationError):
+
+        RepositoryLanguages(
+            languages={"Python": "100"},
+            total_bytes=100
+        )

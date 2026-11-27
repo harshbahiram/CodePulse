@@ -1,6 +1,7 @@
 from datetime import datetime
+from typing import Annotated
+from pydantic import BaseModel, Field, HttpUrl, field_validator, model_validator
 
-from pydantic import BaseModel, Field, HttpUrl, field_validator
 from app.utils.github_url import parse_github_url
 
 
@@ -86,8 +87,18 @@ class RepositoryCommit(BaseModel):
 
 
 class RepositoryLanguages(BaseModel):
-    languages: dict[str, int]
-    total_bytes: int = Field(ge=0)
+    languages: dict[str, Annotated[int, Field(ge=0, strict=True)]]
+    total_bytes: int = Field(ge=0, strict=True)
+
+    @model_validator(mode="after")
+    def validate_total_bytes(self):
+
+        if self.total_bytes != sum(self.languages.values()):
+            raise ValueError(
+                "Total bytes must match the sum of language bytes"
+            )
+
+        return self
 
 
 class RepositoryResponse(BaseModel):
