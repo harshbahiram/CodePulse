@@ -14,3 +14,15 @@ class InvalidRepositoryDataError(RepositoryServiceError):
     """Raised when repository data is invalid or incomplete."""
 
     pass
+
+
+class BranchNotFoundError(RepositoryServiceError):
+    """Raised when the requested branch does not exist."""
+
+    pass
+
+
+class InvalidBranchNameError(RepositoryServiceError):
+    """Raised when a branch name is invalid."""
+
+    pass

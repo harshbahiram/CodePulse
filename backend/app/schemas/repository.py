@@ -70,13 +70,13 @@ class RepositoryMetadata(BaseModel):
 
 
 class RepositoryBranch(BaseModel):
-    name: str
-    commit_sha: str
+    name: str = Field(min_length=1)
+    commit_sha: str = Field( pattern=r"^[a-fA-F0-9]{40}$")
     protected: bool
 
 
 class RepositoryCommit(BaseModel):
-    sha: str
+    sha: str = Field( pattern=r"^[a-fA-F0-9]{40}$")
     message: str
 
     author_name: str | None = None
@@ -104,3 +104,31 @@ class RepositoryLanguages(BaseModel):
 class RepositoryResponse(BaseModel):
     repository: RepositoryMetadata
     languages: RepositoryLanguages
+
+
+class RepositoryBranches(BaseModel):
+
+    branches: list[RepositoryBranch]
+
+    total_branches: int = Field(ge=0)
+
+    truncated: bool = False
+
+
+class RepositorySnapshot(BaseModel):
+
+    repository: RepositoryMetadata
+
+    branch: RepositoryBranch
+
+    commit: RepositoryCommit
+
+    @model_validator(mode="after")
+    def validate_commit_consistency(self):
+
+        if self.branch.commit_sha != self.commit.sha:
+            raise ValueError(
+                "Branch and commit SHA must match"
+            )
+
+        return self
