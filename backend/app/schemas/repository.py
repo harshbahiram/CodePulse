@@ -77,6 +77,7 @@ class RepositoryBranch(BaseModel):
 
 class RepositoryCommit(BaseModel):
     sha: str = Field( pattern=r"^[a-fA-F0-9]{40}$")
+    tree_sha: str = Field( pattern=r"^[a-fA-F0-9]{40}$")
     message: str
 
     author_name: str | None = None

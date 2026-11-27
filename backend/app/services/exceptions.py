@@ -26,3 +26,9 @@ class InvalidBranchNameError(RepositoryServiceError):
     """Raised when a branch name is invalid."""
 
     pass
+
+
+class InvalidRepositoryTreeError(RepositoryServiceError):
+    """Raised when repository tree data is invalid."""
+
+    pass

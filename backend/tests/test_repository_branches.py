@@ -101,6 +101,10 @@ def commit_data():
         "commit": {
             "message": "Initial commit",
 
+            "tree": {
+                "sha": "b" * 40
+            },
+
             "author": {
                 "name": "Developer",
                 "email": "developer@example.com"

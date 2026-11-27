@@ -258,6 +258,7 @@ class RepositoryService:
 
             return RepositoryCommit(
                 sha=data["sha"],
+                tree_sha=commit_data["tree"]["sha"],
                 message=commit_data["message"],
                 author_name=author.get("name"),
                 author_email=author.get("email"),
